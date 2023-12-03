@@ -1,5 +1,5 @@
 %% BMEN E3810: Biomedical Engineering Laboratory I (INSTRON Data Analysis)
-%  Written by: Dr. Lauren N. Heckelman
+%  Written by: Dr. Lauren N. Heckelman, Jeannine Turgeon, and Anjali Parande
 %  Fall 2023
 
 %% Initialize the Workspace:
