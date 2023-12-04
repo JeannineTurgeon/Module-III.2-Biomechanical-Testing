@@ -161,7 +161,7 @@ for k = 1:length(materials)
             E(n,k) = add_E;
 
         % Ultimate Tensile Strength
-            uts(n,k) = max(Stress);
+            uts(n,k) = max(Stress_linear);
 
         % Extensibilty - end of strain on linear region
             extensibility(n,k) = max(Strain_linear)*100; % to make percentage
@@ -231,9 +231,7 @@ end
 % Ultimate Tensile Strength
     UTS_data = [uts(:,3),uts(:,4)]; % no uts for silicone because no ruptures
     pValue_UTS = anova1(UTS_data, [],'off'); % off stops table output
-    if pValue_UTS < 0.05
       [h, pUTS_Ch, ci, stats] = ttest2(uts(:,3),uts(:,4));
-    end
 % Extensibility
     Extens_data = [extensibility(:,3),extensibility(:,4)]; % no extensibility for silicone because no ruptures
     pValue_Extens = anova1(Extens_data, [],'off'); % off stops table output
@@ -263,8 +261,7 @@ end
 if pStiff_Ch < 0.05
     sigstar({[3,4]},pStiff_Ch);
 end
-% display the mean and std values on the bar plot
-for i = 1:length(meanStiff)
+for i = 1:length(meanStiff)  % add mean and std values to plot
     text(i, meanStiff(i) + stdvStiff(i) + 0.1, sprintf('%0.1f ± %0.1f', meanStiff(i), stdvStiff(i)), ...
         'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
 end
@@ -281,13 +278,14 @@ xlabel('Sample Type');
 ylabel("Young's Modulus (MPa)");
 xticks(1:4);
 xticklabels({'Silicone Thin', 'Silicone Thick', 'Chicken Untreated', 'Chicken Treated'});
+% include significance if applicable
 if pE_Si < 0.05
     sigstar({[1,2]},pE_Si);
 end
 if pE_Ch < 0.05
     sigstar({[3,4]},pE_Ch);
-end
-for i = 1:length(meanMod)
+end 
+for i = 1:length(meanMod)  % add mean and std values to plot
     text(i, meanMod(i) + stdvMod(i) + 0.1, sprintf('%0.1f ± %0.1f', meanMod(i), stdvMod(i)), ...
         'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
 end
@@ -303,14 +301,12 @@ title("Mean Ulitimate Tensile Strength of Each Sample ");
 xlabel('Sample Type');
 ylabel("Ultimate Tensile Strength (MPa)");
 xticks(1:4);
-xticklabels({'Silicone Thin', 'Silicone Thick', 'Chicken Untreated', 'Chicken Treated'});
-if pUTS_Si < 0.05
-    sigstar({[1,2]},pUTS_Si);
-end
+xticklabels({'Chicken Untreated', 'Chicken Treated'});
+% include significance if applicable
 if pUTS_Ch < 0.05
     sigstar({[3,4]},pUTS_Ch);
 end
-for i = 1:length(meanUTS)
+for i = 1:length(meanUTS)  % add mean and std values to plot
     text(i, meanUTS(i) + stdvUTS(i) + 0.1, sprintf('%0.1f ± %0.1f', meanUTS(i), stdvUTS(i)), ...
         'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
 end
@@ -327,10 +323,11 @@ xlabel('Sample Type');
 ylabel("Extensibility (%)");
 xticks(1:2);
 xticklabels({'Chicken Untreated', 'Chicken Treated'});
+% include significance if applicable
 if pExtens_Ch < 0.05
     sigstar({[1,2]},pExtens_Ch);
 end
-for i = 1:length(meanExtens)
+for i = 1:length(meanExtens) % add mean and std values to plot
     text(i, meanExtens(i) + stdvExtens(i) + 0.1, sprintf('%0.1f ± %0.1f', meanExtens(i), stdvExtens(i)), ...
         'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
 end
